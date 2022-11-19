@@ -69,6 +69,14 @@
                                 <input type="text" id="nama" class="form-control" disabled aria-label="Amount (to the nearest dollar)">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-warning text-white">Keterangan</span>
+                                </div>
+                                <input type="keterangan" id="keterangan" class="form-control" disabled>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
@@ -111,6 +119,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="hapus()">Hapus</button>
                 <input type="hidden" id="idTransaksi">
                 <input type="hidden" id="statusTransaksi">
                 <button type="button" class="btn btn-secondary" onclick="tutupModalRincian()">Tutup</button>
@@ -142,7 +151,7 @@
                             isiPesanan += "<label class='badge badge-success'>Memasak"
                         }
 
-                        isiPesanan += "</label></td><td><button href='#' class='btn btn-inverse-warning btn-sm' onClick='modalRincian(" + data[i].id + ", \"" + data[i].nama + "\", " + data[i].noMeja + "," + data[i].status + ")'><i class='mdi mdi-format-list-bulleted-type'></i><i class='mdi mdi-food-fork-drink'></i></button></td></tr>"
+                        isiPesanan += "</label></td><td><button href='#' class='btn btn-inverse-warning btn-sm' onClick='modalRincian(" + data[i].id + ", \"" + data[i].nama + "\", \"" + data[i].keterangan + "\", " + data[i].noMeja + "," + data[i].status + ")'><i class='mdi mdi-format-list-bulleted-type'></i><i class='mdi mdi-food-fork-drink'></i></button></td></tr>"
                     }
                 } else {
                     isiPesanan = "<td colspan='4'>Antrian Masih Kosong :)</td>"
@@ -171,9 +180,10 @@
         });
     }
 
-    function modalRincian(id, nama, noMeja, status) {
+    function modalRincian(id, nama, keterangan, noMeja, status) {
         $("#nama").val(nama)
         $("#noMeja").val(noMeja)
+        $("#keterangan").val(keterangan)
         $("#proses").show()
 
         tampilkanRincian(id)
@@ -234,6 +244,21 @@
 
     function tutupModalRincian() {
         $("#modalRincian").modal("hide")
+    }
+
+    function hapus() {
+        var id = $("#idTransaksi").val()
+        $.ajax({
+            url: '<?= base_url() ?>/antrian/hapus',
+            method: 'post',
+            data: "idTransaksi=" + id,
+            dataType: 'json',
+            success: function(data) {
+                tampilkanAntrian()
+                tampilkanAntrianSelesai()
+                tutupModalRincian()
+            }
+        });
     }
 
     function formatRupiah(angka, prefix) {

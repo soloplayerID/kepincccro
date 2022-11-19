@@ -50,6 +50,15 @@ class Antrian extends BaseController
         echo json_encode("");
     }
 
+    public function hapus()
+    {
+        $id = $this->request->getPost("idTransaksi");
+        $data = ["status" => 2, "is_delete"=> 1];
+        $this->antrianModel->update($id, $data);
+
+        echo json_encode("");
+    }
+
     public function rincianPesanan()
     {
         $idAntian = $this->request->getPost("idAntrian");
