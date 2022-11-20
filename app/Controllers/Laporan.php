@@ -96,4 +96,23 @@ class Laporan extends BaseController
 
         echo json_encode($dataLaporan);
     }
+
+    function print_pdf(){
+        $dompdf = new \Dompdf\Dompdf();
+        $tanggalMulai = $this->request->getPost("tanggalMulai") . " 00:00:00";
+        $tanggalSelesai = $this->request->getPost("tanggalSelesai") . " 23:59:59";
+
+        $data = $this->pembelianModel->where(["tanggal >=" => $tanggalMulai, "tanggal <=" => $tanggalSelesai, "statusAntrian !=" => 0])->findAll();
+
+
+        // print_r($data);
+        // die();
+        // $this->load->view('PoMitra/print_all',$data);
+        $dompdf->loadHtml(view('report/laporan_report', ["reports" => $data]));
+        $dompdf->setPaper('A4', 'portrait'); //ukuran kertas dan orientasi
+        $dompdf->render();
+        $dompdf->stream("laporan-report"); //nama file pdf
+ 
+        return redirect()->to(base_url('Laporan')); //arahkan ke list-iklan setelah laporan di unduh
+    }
 }

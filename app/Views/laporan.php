@@ -3,6 +3,7 @@
 <?php $this->section('content') ?>
 <div class="card">
     <div class="card-header">
+        <form method="post" action="<?= base_url() . '/Laporan/print_pdf' ?>">
         <div class="row align-items-center">
             <div class="col-lg-2">
                 <h2 class="card-title">Laporan</h2>
@@ -18,22 +19,24 @@
             <div class="col-lg-3">
                 <div class="form-group">
                     <label for="pillInput">Tanggal</label>
-                    <input type="date" class="form-control input-pill" id="tanggalMulai" onChange="tampilkan()" placeholder="Rp">
+                    <input type="date" class="form-control input-pill" name="tanggalMulai" id="tanggalMulai" onChange="tampilkan()" placeholder="Rp">
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="form-group">
                     <label for="pillInput">Sampai</label>
-                    <input type="date" class="form-control input-pill" onChange="tampilkan()" id="tanggalSelesai" placeholder="Rp">
+                    <input type="date" class="form-control input-pill" name="tanggalSelesai" onChange="tampilkan()" id="tanggalSelesai" placeholder="Rp">
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
                     <p>Pemasukan :</p>
                     <h5 class="card-title" id="pemasukan">Rp. 0</h5>
+                    <button class="btn btn-sm btn-success">print</button>
                 </div>
             </div>
         </div>
+    </form>
     </div>
     <div class="card-body">
         <div class="table-responsive" id="tempatTabel">
