@@ -108,11 +108,13 @@ class Laporan extends BaseController
         // print_r($data);
         // die();
         // $this->load->view('PoMitra/print_all',$data);
-        $dompdf->loadHtml(view('report/laporan_report', ["reports" => $data]));
-        $dompdf->setPaper('A4', 'portrait'); //ukuran kertas dan orientasi
-        $dompdf->render();
-        $dompdf->stream("laporan-report"); //nama file pdf
+        // $this->load->view('report/laporan_report', ["reports" => $data]);
+        return view('report/laporan_report', ["reports" => $data]);
+        // $dompdf->loadHtml(view('report/laporan_report', ["reports" => $data]));
+        // $dompdf->setPaper('A4', 'portrait'); //ukuran kertas dan orientasi
+        // $dompdf->render();
+        // $dompdf->stream("laporan-report"); //nama file pdf
  
-        return redirect()->to(base_url('Laporan')); //arahkan ke list-iklan setelah laporan di unduh
+        // return redirect()->to(base_url('Laporan')); //arahkan ke list-iklan setelah laporan di unduh
     }
 }

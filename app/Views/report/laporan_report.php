@@ -22,7 +22,11 @@
  
 <body>
   <div class="container">
-    <h2>Laporan Pendapatan</h2>
+    <center><h2>Warung Makan Melani</h2></center>
+    <center><p>Jalan Tambakboyo No. 54A, DERO, Telepon (0857) 26205712</p></center>
+    <center><p>Kode Pos (55283)</p></center>
+    <center><p style="bold">YOGYAKARTA</p></center>
+     <hr style="height:1px;border:none;color:#333;background-color:#333;" />
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
@@ -31,14 +35,16 @@
           <th>NAMA</th>
           <th>HARGA</th>
           <th>JUMLAH</th>
-          <th>TOTAL</th>
           <th>KARYAWAN</th>
+          <th>TOTAL</th>
         </tr>
       </thead>
       <tbody>
         <?php
             if(count($reports) > 0){
+              $totals = 0;
                 $index=0; foreach($reports as $key => $row) {
+                  $totals += $row['harga'] * $row['jumlah'];
                     ?>
                     <tr>
                       <td><?= $index+1 ?></td>
@@ -46,13 +52,17 @@
                       <td><?= $row['namaMenu'] ?></td>
                       <td><?= $row['harga'] ?></td>
                       <td><?= $row['jumlah'] ?></td>
-                      <td><?= $row['harga'] * $row['jumlah'] ?></td>
                       <td><?= $row['namaUser'] ?></td>
+                      <td><?= $row['harga'] * $row['jumlah'] ?></td>
                     </tr>
                     <?php
                 }
-            }
-        ?>
+              }
+              ?>
+              <tr>
+                <td colspan='6'>total</td>
+                <td><?= $totals ?></td>
+              </tr>
       </tbody>
     </table>
   </div>
